@@ -1,0 +1,44 @@
+# ---
+# name: language_aliases
+# type: metadata
+# description: Sprachabhängige Labels und Aliase für Felder
+# ---
+
+languages:
+  - code: de
+    label: Deutsch
+  - code: en
+    label: English
+  - code: fr
+    label: Français
+
+aliases:
+  customer_id:
+    label:
+      de: Kunden-ID
+      en: Customer ID
+      fr: ID client
+    tooltip:
+      de: Eindeutige Kennung des Kunden
+      en: Unique customer identifier
+      fr: Identifiant unique du client
+
+  customer_name:
+    label:
+      de: Name
+      en: Name
+      fr: Nom
+    tooltip:
+      de: Vollständiger Name des Kunden
+      en: Full name of the customer
+      fr: Nom complet du client
+
+  revenue:
+    label:
+      de: Umsatz
+      en: Revenue
+      fr: Chiffre d'affaires
+    tooltip:
+      de: Gesamtumsatz aus Verkäufen
+      en: Total sales revenue
+      fr: Revenu total des ventes
