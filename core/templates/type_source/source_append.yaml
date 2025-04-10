@@ -1,0 +1,17 @@
+# ---
+# name: source_append
+# type: source
+# description: Nur neue Einträge hinzufügen (kein Abgleich)
+# ---
+
+load_type: append
+
+source:
+  format: json
+  path: /data/raw/<your_file>.json
+
+columns:
+  - name: id
+    type: string
+  - name: timestamp
+    type: datetime
