@@ -1,0 +1,27 @@
+# ---
+# name: accumulating_snapshot
+# type: fact
+# version: 1.0.0
+# description: Accumulating Snapshot für Prozessketten (z. B. Bestellung bis Lieferung)
+# ---
+
+type: fact
+grain: accumulating_snapshot
+source: "{{ source_file }}"
+primary_key: process_id
+columns:
+  - name: process_id
+    type: string
+    role: primary_key
+  - name: order_date
+    type: date
+    role: milestone
+  - name: shipping_date
+    type: date
+    role: milestone
+  - name: delivery_date
+    type: date
+    role: milestone
+  - name: total_value
+    type: decimal
+    role: measure
