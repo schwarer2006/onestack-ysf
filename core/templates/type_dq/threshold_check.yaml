@@ -1,0 +1,16 @@
+# ---
+# name: threshold_check
+# type: dq
+# version: 1.0.0
+# description: Prüft ob numerische Werte in akzeptablem Bereich liegen
+# ---
+
+type: dq_check
+check_type: threshold
+rules:
+  - column: discount
+    min: 0
+    max: 0.5
+  - column: quantity
+    min: 1
+    max: 100
