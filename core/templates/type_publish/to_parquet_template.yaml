@@ -1,0 +1,13 @@
+# ---
+# name: to_parquet_template
+# type: publish
+# version: 1.0.0
+# description: Exportiere Daten als Parquet-Datei
+# ---
+
+type: publish
+format: parquet
+target_path: "{{ project }}/output/{{ table_name }}.parquet"
+options:
+  compression: snappy
+  overwrite: true
