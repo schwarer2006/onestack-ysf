@@ -1,0 +1,13 @@
+# ---
+# name: derived_column_template
+# type: transform
+# version: 1.0.0
+# description: Neue Spalte berechnen, z. B. Rabatt oder Status
+# ---
+
+type: transform
+derive:
+  - column: discount_rate
+    expression: "amount / original_price"
+  - column: is_high_value
+    expression: "amount > 1000"
