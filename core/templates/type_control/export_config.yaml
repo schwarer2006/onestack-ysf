@@ -1,0 +1,14 @@
+# ---
+# name: export_target
+# type: export_config
+# description: Zielsystem und Schema für den Export
+# ---
+
+target:
+  system: postgres
+  host: dwh.prod.firma.de
+  port: 5432
+  schema: analytics
+  table: dim_customer
+  truncate_before_load: false
+  write_mode: upsert
