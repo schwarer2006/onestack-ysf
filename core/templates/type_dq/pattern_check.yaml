@@ -1,0 +1,14 @@
+# ---
+# name: pattern_check
+# type: dq
+# version: 1.0.0
+# description: Prüft Muster z. B. E-Mail-Adressen oder Postleitzahlen
+# ---
+
+type: dq_check
+check_type: pattern
+rules:
+  - column: email
+    regex: "^[\\w.-]+@[\\w.-]+\\.\\w{2,}$"
+  - column: postal_code
+    regex: "^\\d{5}$"
