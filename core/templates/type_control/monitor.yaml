@@ -1,0 +1,16 @@
+# ---
+# name: monitor_config
+# type: monitor
+# description: SLA-basierte Kontrolle von Joblaufzeit, Anzahl Zeilen etc.
+# ---
+
+monitor:
+  max_runtime_seconds: 600
+  min_records: 1
+  max_warnings: 3
+  allow_empty: false
+
+notifications:
+  on_failure: team@firma.de
+  on_success: null
+  slack_channel: "#onestack-alerts"
