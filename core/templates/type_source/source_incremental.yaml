@@ -1,0 +1,23 @@
+# ---
+# name: source_incremental
+# type: source
+# description: Zeitbasierter Delta-Import (z. B. > yesterday)
+# ---
+
+load_type: incremental
+
+incremental_settings:
+  timestamp_column: last_update
+  lookback_hours: 24
+
+source:
+  format: parquet
+  path: /data/raw/<your_file>.parquet
+
+columns:
+  - name: id
+    type: string
+  - name: status
+    type: string
+  - name: last_update
+    type: datetime
