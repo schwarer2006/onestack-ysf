@@ -1,0 +1,17 @@
+# ---
+# name: to_postgres_template
+# type: publish
+# version: 1.0.0
+# description: Lade Daten per COPY oder INSERT in PostgreSQL
+# ---
+
+type: publish
+format: postgres
+connection:
+  host: "{{ PG_HOST }}"
+  port: 5432
+  database: "{{ PG_DATABASE }}"
+  user: "{{ PG_USER }}"
+  password: "{{ PG_PASSWORD }}"
+table: "{{ table_name }}"
+mode: overwrite
