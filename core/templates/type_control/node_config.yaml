@@ -1,0 +1,14 @@
+# ---
+# name: node_config
+# type: config
+# description: Parameter, die für einen spezifischen Node gelten
+# ---
+
+parameters:
+  debug: false
+  load_type_override: manual
+  max_chunk_size: 100000
+  use_temp_table: true
+  tags:
+    - staging
+    - experiment
