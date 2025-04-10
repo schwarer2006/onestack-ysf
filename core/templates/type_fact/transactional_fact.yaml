@@ -1,0 +1,27 @@
+# ---
+# name: transactional_fact
+# type: fact
+# version: 1.0.0
+# description: Standard-Faktentabelle auf Transaktionsebene
+# ---
+
+type: fact
+grain: transaction
+source: "{{ source_file }}"
+primary_key: transaction_id
+foreign_keys:
+  - customer_id
+  - product_id
+columns:
+  - name: transaction_id
+    type: integer
+    role: primary_key
+  - name: quantity
+    type: integer
+    role: measure
+  - name: amount
+    type: decimal
+    role: measure
+  - name: transaction_date
+    type: date
+    role: date
