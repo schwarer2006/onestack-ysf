@@ -1,0 +1,23 @@
+# ---
+# name: date_dimension_template
+# type: dimension
+# version: 1.0.0
+# description: Vorlage für klassische Datumstabelle
+# ---
+
+type: dimension
+source: generated
+primary_key: date_key
+columns:
+  - name: date_key
+    type: integer
+    role: primary_key
+  - name: full_date
+    type: date
+    role: attribute
+  - name: day_name
+    type: string
+    role: attribute
+  - name: is_weekend
+    type: boolean
+    role: flag
