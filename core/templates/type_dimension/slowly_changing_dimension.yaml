@@ -1,0 +1,29 @@
+# ---
+# name: slowly_changing_dimension
+# type: dimension
+# version: 1.0.0
+# description: SCD Type 2 Dimension mit Validity-Timestamps
+# ---
+
+type: dimension
+scd_type: 2
+source: "{{ source_file }}"
+primary_key: id
+valid_from: valid_from
+valid_to: valid_to
+columns:
+  - name: id
+    type: integer
+    role: surrogate_key
+  - name: natural_key
+    type: string
+    role: business_key
+  - name: name
+    type: string
+    role: attribute
+  - name: valid_from
+    type: timestamp
+    role: scd_start
+  - name: valid_to
+    type: timestamp
+    role: scd_end
