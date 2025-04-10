@@ -1,0 +1,14 @@
+# ---
+# name: to_duckdb_template
+# type: publish
+# version: 1.0.0
+# description: Speichere Ergebnisse direkt in eine DuckDB-Tabelle
+# ---
+
+type: publish
+format: duckdb
+database_path: "{{ project }}/duckdb/{{ environment }}.duckdb"
+table_name: "{{ table_name }}"
+options:
+  mode: append
+  auto_create: true
