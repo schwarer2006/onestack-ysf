@@ -1,0 +1,43 @@
+# ---
+# name: time_intelligence_config
+# type: time_logic
+# description: Konfiguration für Zeitvergleiche, Aggregation & Kalenderlogik
+# ---
+
+calendar:
+  date_column: order_date
+  calendar_type: gregorian
+  week_start: Monday
+  fiscal_year_start_month: 4   # April
+
+aggregation_levels:
+  - day
+  - week
+  - month
+  - quarter
+  - year
+
+comparisons:
+  - current_vs_previous_day
+  - current_vs_previous_week
+  - current_vs_previous_month
+  - current_vs_previous_year
+  - YTD_vs_PY_YTD
+
+rolling_windows:
+  - name: 7d_avg
+    type: moving_average
+    window: 7
+  - name: 28d_sum
+    type: rolling_sum
+    window: 28
+
+custom_flags:
+  is_workday: true
+  is_weekend: true
+  is_end_of_month: true
+  is_fiscal_period_end: true
+
+output:
+  enrich_table: dim_date
+  write_to: shared/dim_date_enriched.parquet
