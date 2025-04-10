@@ -1,0 +1,13 @@
+# ---
+# name: required_fields
+# type: dq
+# version: 1.0.0
+# description: Validiert Pflichtfelder auf NULL-Werte
+# ---
+
+type: dq_check
+check_type: required
+columns:
+  - customer_id
+  - name
+  - email
