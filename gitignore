@@ -1,0 +1,16 @@
+
+# Logs und temporäre Dateien
+logs/
+*.log
+*.tmp
+
+# DuckDB-Dateien (optional, bei Bedarf auskommentieren)
+storage/**/*.duckdb
+
+# Python-Cache
+__pycache__/
+*.pyc
+
+# System-Dateien
+.DS_Store
+Thumbs.db
