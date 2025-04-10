@@ -1,0 +1,31 @@
+# ---
+# name: revenue_forecast
+# type: forecast
+# description: Umsatz-Vorhersage mit linearem Regressionsmodell
+# ---
+
+input:
+  source: fact_sales.parquet
+  date_column: sale_date
+  value_column: revenue
+  group_by: country  # optional
+
+model:
+  type: linear_regression
+  horizon: 30
+  frequency: D  # D = daily, W = weekly, M = monthly
+  include_ci: true
+
+output:
+  path: forecasts/revenue_forecast.parquet
+  include_actuals: true
+  format: wide  # optional: 'long' or 'wide'
+
+metrics:
+  - rmse
+  - mape
+  - r2
+
+comparison:
+  with: previous_year
+  shift_days: 365
