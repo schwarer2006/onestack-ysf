@@ -1,0 +1,17 @@
+# ---
+# name: join_lookup_template
+# type: transform
+# version: 1.0.0
+# description: Führt Lookup über Mapping-Tabelle aus (Left Join)
+# ---
+
+type: transform
+join:
+  type: left
+  base_table: sales
+  lookup_table: product_lookup
+  on:
+    - sales.product_id = product_lookup.id
+  columns:
+    - product_lookup.name AS product_name
+    - product_lookup.category
