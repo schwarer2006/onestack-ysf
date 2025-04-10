@@ -1,0 +1,18 @@
+# ---
+# name: lineage_customer
+# type: lineage
+# description: Visualisierung des Flusses der Kundendaten
+# ---
+
+lineage:
+  source: customers.csv
+  transformations:
+    - step: bronze_load
+      action: normalize
+    - step: dim_build
+      action: add_surrogate_keys
+    - step: scd2
+      action: hash_check
+  target: dim_customer (PostgreSQL)
+
+diagram_type: simple_flow
