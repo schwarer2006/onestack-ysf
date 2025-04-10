@@ -1,0 +1,32 @@
+# ---
+# name: sales_time_series
+# type: timeseries
+# description: Analyse des täglichen Umsatzverlaufs nach Region
+# ---
+
+input:
+  source: fact_sales.parquet
+  date_column: sale_date
+  value_column: revenue
+  group_by:
+    - region
+
+analysis:
+  decomposition: true              # STL-Zerlegung in Trend, Seasonality, Residuum
+  smoothing:
+    method: moving_average
+    window: 7                      # 7-Tage-Gleitmittel
+  detect_outliers: z_score         # oder 'iqr', 'none'
+  resample: W                      # Aggregation z. B. täglich (D), wöchentlich (W), monatlich (M)
+  metrics:
+    - mean
+    - std
+    - min
+    - max
+    - count
+    - pct_change
+
+output:
+  path: analysis/sales_timeseries.parquet
+  include_components: true         # speichert Trend, Saisonalität etc. als Spalten
+  include_summary: true            # Statistische Kennzahlen in separater Datei
