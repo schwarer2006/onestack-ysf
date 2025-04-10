@@ -1,0 +1,11 @@
+pyyaml
+python-dotenv
+duckdb
+pandas
+pyarrow
+fsspec
+rich
+
+# Optional für Tests
+pytest
+coverage
