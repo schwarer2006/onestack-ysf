@@ -1,0 +1,24 @@
+# ---
+# name: source_delta
+# type: source
+# description: Nur neue/geänderte Daten seit letztem Lauf
+# ---
+
+load_type: delta
+
+delta_settings:
+  compare_column: last_modified
+  threshold_days: 1
+
+source:
+  format: csv
+  path: /data/raw/<your_file>.csv
+  header: true
+
+columns:
+  - name: id
+    type: string
+  - name: value
+    type: integer
+  - name: last_modified
+    type: datetime
