@@ -1,0 +1,17 @@
+# ---
+# name: source_manual
+# type: source
+# description: Wird nur manuell durch onestack run gestartet
+# ---
+
+load_type: manual
+
+source:
+  format: parquet
+  path: /data/imports/manual_dataset.parquet
+
+columns:
+  - name: id
+    type: string
+  - name: event
+    type: string
