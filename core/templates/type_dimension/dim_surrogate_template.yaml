@@ -1,47 +1,20 @@
 # ---
-# name: dim_surrogate_template
-# type: dimension
-# version: 1.0.0
-# description: Dimension mit Surrogate Key, SCD2 und Hash-Überwachung
+# name: surrogate_key
+# type: extension
+# version: 1.1.0
+# description: Fügt Surrogate Key zu einer beliebigen Dimension hinzu
 # ---
 
-type: dimension
-surrogate_key: customer_sid
-natural_key: customer_id
-scd_type: 2
-hash_column: row_hash
-effective_date_column: valid_from
-expiry_date_column: valid_to
-is_current_column: is_current
+surrogate_key:
+  name: <name>_sid
+  type: integer
+  start: 1000
+  strategy: auto_increment
+  persisted: true
 
 columns:
-  - name: customer_sid
+  - name: <name>_sid
     type: integer
     role: surrogate_key
     generated: true
-
-  - name: customer_id
-    type: string
-    role: business_key
-
-  - name: first_name
-    type: string
-
-  - name: last_name
-    type: string
-
-  - name: email
-    type: string
-
-  - name: valid_from
-    type: date
-
-  - name: valid_to
-    type: date
-
-  - name: is_current
-    type: boolean
-
-  - name: row_hash
-    type: string
-    role: hash
+    nullable: false
