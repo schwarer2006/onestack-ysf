@@ -1,0 +1,16 @@
+# ---
+# name: schedule_customer_load
+# type: schedule
+# description: Zeit- oder Eventbasierter Trigger für einen Job
+# ---
+
+trigger:
+  type: cron
+  expression: "0 6 * * *"  # täglich um 06:00 Uhr
+
+dependencies:
+  - node: stg_customers
+  - node: dim_customers
+
+enabled: true
+timezone: Europe/Berlin
