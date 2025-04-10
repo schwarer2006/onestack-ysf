@@ -1,0 +1,25 @@
+# ---
+# name: snapshot_fact
+# type: fact
+# version: 1.0.0
+# description: Snapshot-basierte Faktentabelle (z. B. täglicher Bestand)
+# ---
+
+type: fact
+grain: snapshot
+source: "{{ source_file }}"
+snapshot_date: snapshot_date
+primary_key: composite_id
+columns:
+  - name: composite_id
+    type: string
+    role: primary_key
+  - name: account_id
+    type: integer
+    role: foreign_key
+  - name: balance
+    type: decimal
+    role: measure
+  - name: snapshot_date
+    type: date
+    role: date
