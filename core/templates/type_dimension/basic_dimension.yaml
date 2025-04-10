@@ -1,0 +1,20 @@
+# ---
+# name: basic_dimension
+# type: dimension
+# version: 1.0.0
+# description: Standarddimension mit ID und Attributspalten
+# ---
+
+type: dimension
+source: "{{ source_file }}"
+primary_key: id
+columns:
+  - name: id
+    type: integer
+    role: primary_key
+  - name: name
+    type: string
+    role: attribute
+  - name: created_at
+    type: timestamp
+    role: audit_column
