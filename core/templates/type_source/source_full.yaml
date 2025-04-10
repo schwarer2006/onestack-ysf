@@ -1,0 +1,19 @@
+# ---
+# name: source_full
+# type: source
+# description: Vollständiger Neu-Import bei jedem Ausführen
+# ---
+
+load_type: full
+
+source:
+  format: csv
+  path: /data/raw/<your_file>.csv
+  delimiter: ","
+  header: true
+
+columns:
+  - name: id
+    type: string
+  - name: value
+    type: integer
