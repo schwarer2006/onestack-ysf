@@ -1,0 +1,14 @@
+# ---
+# name: normalize_template
+# type: transform
+# version: 1.0.0
+# description: Führt Standardisierung z. B. Groß-/Kleinschreibung oder Nullwerte durch
+# ---
+
+type: transform
+transformations:
+  - column: name
+    operation: lowercase
+  - column: category
+    operation: fillna
+    value: "unknown"
