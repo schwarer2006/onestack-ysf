@@ -1,0 +1,20 @@
+🔍 Starte Post-Check für OneStack YSF...
+✅ Verzeichnis vorhanden: /opt/onestack-ysf/core
+✅ Verzeichnis vorhanden: /opt/onestack-ysf/scripts
+✅ Verzeichnis vorhanden: /opt/onestack-ysf/projects
+✅ Verzeichnis vorhanden: /opt/onestack-ysf/projects/prj-0001
+✅ Verzeichnis vorhanden: /opt/onestack-ysf/logs
+✅ Projektstruktur OK: config
+✅ Projektstruktur OK: nodes
+✅ Projektstruktur OK: orchestration
+❌ Projektstruktur fehlt: logs
+🐍 Python-Check...
+✅ Python verfügbar: Python 3.12.7
+📦 Prüfe wichtige Python-Packages...
+❌ pyyaml NICHT installiert!
+✅ pandas installiert
+✅ pyarrow installiert
+✅ duckdb installiert
+✅ fsspec installiert
+❌ Keine YAML-Dateien gefunden!
+✅ Schreibtest erfolgreich: /opt/onestack-ysf/logs/postcheck_testfile.txt

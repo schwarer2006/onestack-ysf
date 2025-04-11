@@ -1,0 +1,18 @@
+name: customer_loader
+type: source
+project: prj-0002
+description: Automatisch generiert aus customers.csv
+load_type: initial
+source:
+  format: csv
+  path: /data/shared/customers.csv
+  delimiter: ','
+  encoding: utf-8
+  header: true
+columns:
+  CustomerID: integer
+  FirstName: string
+  MiddleInitial: string
+  LastName: string
+  CityID: integer
+  Address: string

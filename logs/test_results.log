@@ -1,1 +1,23 @@
  
+2025-04-11T08:36:35.113473 | ❌ projects/prj-0001/orchestration/orchestration.yaml: Schlüssel 'type' fehlt
+2025-04-11T08:36:35.114222 | ❌ Fehler beim Parsen projects/prj-0001/config/node_config.yaml: argument of type 'NoneType' is not iterable
+2025-04-11T08:36:35.115981 | ❌ projects/prj-0001/config/data_lineage.yaml: Schlüssel 'type' fehlt
+2025-04-11T08:36:35.117338 | ❌ projects/prj-0001/config/monitor.yaml: Schlüssel 'type' fehlt
+2025-04-11T08:36:35.118774 | ❌ projects/prj-0001/config/export_config.yaml: Schlüssel 'type' fehlt
+2025-04-11T08:36:35.120705 | ❌ projects/prj-0001/config/config.yaml: Schlüssel 'type' fehlt
+2025-04-11T08:36:35.122470 | ❌ projects/prj-0001/config/parameters.yaml: Schlüssel 'type' fehlt
+2025-04-11T08:36:35.123605 | ❌ projects/prj-0001/config/time_intelligence.yaml: Schlüssel 'type' fehlt
+2025-04-11T08:36:35.125685 | ❌ projects/prj-0001/config/language_aliases.yaml: Schlüssel 'type' fehlt
+2025-04-11T08:36:35.126944 | ❌ projects/prj-0001/config/schedule.yaml: Schlüssel 'type' fehlt
+2025-04-11T10:11:39.285704 | ✅ OK: projects/prj-0001/test.yaml
+2025-04-11T10:11:39.287339 | ❌ projects/prj-0001/orchestration/orchestration.yaml: Schlüssel 'type' fehlt
+2025-04-11T10:11:39.287563 | ❌ Fehler beim Parsen projects/prj-0001/config/node_config.yaml: argument of type 'NoneType' is not iterable
+2025-04-11T10:11:39.288687 | ❌ projects/prj-0001/config/data_lineage.yaml: Schlüssel 'type' fehlt
+2025-04-11T10:11:39.289581 | ❌ projects/prj-0001/config/monitor.yaml: Schlüssel 'type' fehlt
+2025-04-11T10:11:39.290791 | ❌ projects/prj-0001/config/export_config.yaml: Schlüssel 'type' fehlt
+2025-04-11T10:11:39.292636 | ❌ projects/prj-0001/config/config.yaml: Schlüssel 'type' fehlt
+2025-04-11T10:11:39.294467 | ❌ projects/prj-0001/config/parameters.yaml: Schlüssel 'type' fehlt
+2025-04-11T10:11:39.295852 | ❌ projects/prj-0001/config/time_intelligence.yaml: Schlüssel 'type' fehlt
+2025-04-11T10:11:39.298432 | ❌ projects/prj-0001/config/language_aliases.yaml: Schlüssel 'type' fehlt
+2025-04-11T10:11:39.299745 | ❌ projects/prj-0001/config/schedule.yaml: Schlüssel 'type' fehlt
+2025-04-11T13:46:37.163757 | ✅ OK: projects/prj-0002/config/customer_loader.yaml

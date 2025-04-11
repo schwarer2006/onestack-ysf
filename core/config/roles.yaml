@@ -1,0 +1,26 @@
+# ==========================================================
+# 📄 Datei: roles.yaml
+# 🛡️ Zweck : Definition von Rollen & CLI-Berechtigungen
+# 🔧 Version: 0.1.0
+# ✏️ Status : draft
+# 📅 Erstellt: 2025-04-11
+# ==========================================================
+
+roles:
+  admin:
+    - run
+    - validate
+    - test
+    - view
+    - copy-template
+    - manage-projects
+
+  dev:
+    - validate
+    - test
+    - view
+    - copy-template
+
+  readonly:
+    - view
+    - status
