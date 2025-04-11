@@ -1,1 +1,18 @@
- 
+ # 🔧 Systemweite OneStack YSF Konfiguration
+version: 0.3.2
+license:
+  type: community
+  valid_until: 2026-12-31
+  features:
+    - loader
+    - processor
+
+defaults:
+  parquet_compression: snappy
+  duckdb_file_path: /opt/onestack-ysf/db/duckdb_instance.duckdb
+
+paths:
+  shared: /opt/onestack-ysf/shared/
+  logs: /opt/onestack-ysf/logs/
+  templates: /opt/onestack-ysf/core/templates/
+
