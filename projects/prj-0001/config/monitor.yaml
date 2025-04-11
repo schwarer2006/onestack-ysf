@@ -1,1 +1,15 @@
 
+# ---
+# name: monitor.yaml
+# type: monitor
+# description: Überwachung und SLA-Konfiguration für Projektjobs
+# ---
+
+sla:
+  max_runtime_minutes: 45
+  max_errors_per_job: 3
+  allow_partial_success: false
+
+notifications:
+  on_failure: true
+  email: datateam@firma.ch
