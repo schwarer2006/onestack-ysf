@@ -1,1 +1,23 @@
+# ---
+# name: data_lineage.yaml
+# type: lineage
+# description: Manuelle Ergänzung zur Herkunft und Transformation der Daten
+# ---
+
+sources:
+  - id: sales_crm
+    origin: "CRM-System Salesforce"
+    method: "API Export"
+    frequency: "täglich"
+    contact: "it@firma.ch"
+
+transformations:
+  - from: sales_crm
+    to: fact_sales
+    description: "Berechnung von Nettoerlösen, Umrechnung in EUR"
+
+exports:
+  - to: dim_customer
+    tool: "YSF Publisher"
+    destination: "PostgreSQL (Metabase)"
 
