@@ -1,1 +1,22 @@
+# ---
+# name: export_config.yaml
+# type: export
+# description: Zielsystemkonfiguration für Gold Layer Export
+# ---
+
+targets:
+  - name: postgresql_default
+    type: postgresql
+    host: localhost
+    port: 5432
+    database: onestack
+    schema: public
+    user: onestack_user
+    password: geheim
+    default: true
+
+  - name: duckdb_dev
+    type: duckdb
+    file: /opt/onestack-ysf/db/dev.duckdb
+    default: false
 
