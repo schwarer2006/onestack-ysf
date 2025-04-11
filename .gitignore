@@ -1,1 +1,20 @@
- 
+# 🐍 Virtuelle Umgebung & Bytecode
+venv/
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# 🧪 Test & Logdateien
+logs/
+*.log
+
+# 📦 Temporäre Dateien
+*.parquet
+*.csv
+*.tmp
+
+# 💻 IDE & Systemdateien
+.DS_Store
+.idea/
+.vscode/
