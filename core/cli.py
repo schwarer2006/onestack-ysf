@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # ==========================================================
 # 📄 Script: cli.py
 # 🧠 Zweck : OneStack CLI – Startpunkt für Kommandos
@@ -6,7 +7,6 @@
 # 📅 Erstellt: 2025-04-11
 # ==========================================================
 
-#!/usr/bin/env python3
 """
 CLI-Einstiegspunkt für OneStack YSF
 
@@ -17,22 +17,24 @@ Verfügbare Kommandos:
   - copy-template Kopiere Templates ins Projekt
   - test          YAML-Test aller Nodes (Basisvalidierung)
   - view          Zeige Datei-Inhalt im Terminal (yaml/log/py etc.)
+  - push          Git Push mit optionaler Commit-Message
 """
 
-from core.lib.role_checker import is_allowed, get_role
-import sys
 import os
+import sys
 import argparse
 import yaml
 from datetime import datetime
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
+from core.lib.role_checker import is_allowed, get_role
 from core.lib.test_runner import test_all_yaml
 
 LOG_FILE = "logs/test_results.log"
 
-# --- Hauptfunktionen -----------------------------------------------------
+# ----------------------------------------------------------
+# Hauptfunktionen
+# ----------------------------------------------------------
 
 def run(args):
     print(f"🚀 Running node or project: {args.target}")
@@ -99,39 +101,27 @@ def view_file(args):
         for line in lines:
             print(line.strip())
 
-def test_all_yaml(args):
-    root_dir = args.path if args.path else "projects"
-    log_entries = []
-    success_count = 0
-    fail_count = 0
+def git_push(args):
+    import subprocess
+    message = args.message if args.message else f"🔄 Auto-Commit: {datetime.now().isoformat()}"
 
-    print(f"🧪 YAML-Testlauf gestartet in: {root_dir}")
+    try:
+        print("🌀 Git: Add changes...")
+        subprocess.run(["git", "add", "."], check=True)
 
-    for root, _, files in os.walk(root_dir):
-        for file in files:
-            if file.endswith(".yaml") or file.endswith(".yml"):
-                filepath = os.path.join(root, file)
-                valid, message = validate_yaml_file(filepath)
-                print(message)
-                log_entries.append(f"{datetime.now().isoformat()} | {message}")
-                if valid:
-                    success_count += 1
-                else:
-                    fail_count += 1
+        print(f"📝 Commit mit Message: {message}")
+        subprocess.run(["git", "commit", "-m", message], check=True)
 
-    os.makedirs("logs", exist_ok=True)
-    logfile = args.logfile if args.logfile else LOG_FILE
-    with open(logfile, "a") as logf:
-        for entry in log_entries:
-            logf.write(entry + "\n")
+        print("📤 Push nach GitHub...")
+        subprocess.run(["git", "push"], check=True)
 
-    if args.summary:
-        print("\n📊 Zusammenfassung:")
-        print(f"   ✅ Erfolgreich: {success_count}")
-        print(f"   ❌ Fehlerhaft : {fail_count}")
-        print(f"   🔍 Log gespeichert unter: {logfile}")
+        print("✅ Git Push erfolgreich abgeschlossen.")
+    except subprocess.CalledProcessError:
+        print("❌ Fehler beim Git Push – prüfe deinen Commit oder Netzwerk.")
 
-# --- CLI-Parser Setup ----------------------------------------------------
+# ----------------------------------------------------------
+# CLI Setup
+# ----------------------------------------------------------
 
 def main():
     parser = argparse.ArgumentParser(description="OneStack YSF CLI – YAML Semantic Framework")
@@ -172,12 +162,17 @@ def main():
     view_parser.add_argument("--head", type=int, help="Nur die ersten N Zeilen anzeigen")
     view_parser.set_defaults(func=view_file)
 
+    # push
+    push_parser = subparsers.add_parser("push", help="Führt Git Add/Commit/Push aus")
+    push_parser.add_argument("--message", help="Commit-Message")
+    push_parser.set_defaults(func=git_push)
 
+    # --- Parse + Rollenprüfung ---
+    args = parser.parse_args()
     if not is_allowed(args.command):
         print(f"⛔ Zugriff verweigert: Deine Rolle ({get_role()}) darf '{args.command}' nicht ausführen.")
         return
 
-    args = parser.parse_args()
     args.func(args)
 
 if __name__ == "__main__":
