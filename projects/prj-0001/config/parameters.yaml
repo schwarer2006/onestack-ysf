@@ -1,1 +1,38 @@
+# ---
+# name: parameters.yaml
+# type: parameter
+# description: Projektweite Parameter für Transformations- oder Mappingprozesse
+# ---
+
+defaults:
+  currency: CHF
+  fiscal_year_start: 4
+  timezone: Europe/Zurich
+
+scd:
+  valid_from_column: valid_from
+  valid_to_column: valid_to
+  current_flag_column: is_current
+
+lookups:
+  region_mapping:
+    file: shared/region_mapping.csv
+    join_on: country_code
+    target_column: sales_region
+
+mappings:
+  gender:
+    m:
+      de: Männlich
+      en: Male
+    f:
+      de: Weiblich
+      en: Female
+    x:
+      de: Divers
+      en: Non-binary
+
+flags:
+  test_mode: false
+  dry_run: true
 
