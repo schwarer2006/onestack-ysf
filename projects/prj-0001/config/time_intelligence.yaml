@@ -1,1 +1,23 @@
+# ---
+# name: time_intelligence.yaml
+# type: time
+# description: Zeitbasierte Logik zur Erweiterung der Kalenderdimension
+# ---
+
+calendar:
+  date_column: date
+  fiscal_year_start_month: 4
+
+rolling_windows:
+  - name: revenue_7d_avg
+    type: moving_average
+    window: 7
+
+  - name: revenue_30d_sum
+    type: rolling_sum
+    window: 30
+
+output:
+  enrich_table: shared/dim_date.parquet
+  write_to: shared/dim_date_extended.parquet
 
