@@ -1,1 +1,21 @@
 
+# ---
+# name: schedule.yaml
+# type: schedule
+# description: Zeitbasierte Jobsteuerung für das Projekt
+# ---
+
+jobs:
+  daily_load:
+    cron: "0 3 * * *"         # Täglich um 03:00 Uhr
+    steps:
+      - run: customer_loader.yaml
+      - run: customer_bronze.yaml
+      - run: dim_customer.yaml
+      - run: fact_sales.yaml
+      - run: export_dim_customer.yaml
+
+  weekly_snapshot:
+    cron: "30 4 * * 1"        # Montags um 04:30 Uhr
+    steps:
+      - run: customer_snapshot.yaml
