@@ -1,0 +1,15 @@
+project: prj-0001
+description: Daten für Kunden A
+
+postgres:
+  schema: kunden_a
+  table_prefix: "ka_"
+  export_mode: append
+
+parameters:
+  fiscal_year_start: 4
+  default_currency: CHF
+
+tags:
+  - kunde1
+  - demo
