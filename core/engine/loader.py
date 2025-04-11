@@ -1,41 +1,31 @@
- #!/usr/bin/env python3
+#!/usr/bin/env python3
 # ==========================================================
 # 📄 Script: loader.py
 # 🧠 Zweck : Lädt Daten basierend auf YAML-Konfiguration, schreibt Parquet mit Metadaten
-# 🔧 Version: 0.1.0
+# 🔧 Version: 0.2.0
 # ✏️ Status : stable
 # 📅 Erstellt: 2025-04-10
 # ==========================================================
-# loader.py
+
 import os
-import duckdb
 import pandas as pd
-import pyarrow as pa
-import pyarrow.parquet as pq
-from datetime import datetime
 import getpass
+from datetime import datetime
 
-from core.engine.utils.yaml_loader import load_yaml
-from core.engine.utils.duckdb_helper import duckdb_connect
-
-
-def write_parquet_with_metadata(df, output_path, metadata: dict):
-    table = pa.Table.from_pandas(df)
-    encoded_meta = {k: str(v).encode("utf-8") for k, v in metadata.items()}
-    table = table.replace_schema_metadata(encoded_meta)
-    pq.write_table(table, output_path)
-    print(f"✅ Parquet geschrieben mit Metadaten: {output_path}")
+from core.lib.yaml_loader import load_yaml
+from core.lib.duckdb_helper import duckdb_connect
+from core.lib.meta_writer import write_parquet_with_metadata
 
 
 def run_loader(yaml_path: str, output_dir: str = "in"):
     config = load_yaml(yaml_path)
     source = config.get("source", {})
     file_path = source.get("path")
-    fmt = source.get("format", "csv")
+    fmt = source.get("format", "csv").lower()
 
     print(f"📥 Lade Quelle: {file_path} ({fmt.upper()})")
 
-    # CSV oder Parquet lesen
+    # Datei einlesen
     if fmt == "csv":
         df = pd.read_csv(
             file_path,
@@ -48,17 +38,18 @@ def run_loader(yaml_path: str, output_dir: str = "in"):
     else:
         raise ValueError(f"❌ Format {fmt} wird nicht unterstützt.")
 
-    # DuckDB-Check (optional, validiert Struktur)
+    # DuckDB-Check (optional)
     con = duckdb_connect()
     con.register("df", df)
-    print("🔎 Zeilenanzahl:", con.sql("SELECT COUNT(*) FROM df").fetchall()[0][0])
+    row_count = con.sql("SELECT COUNT(*) FROM df").fetchall()[0][0]
+    print(f"🔎 Zeilenanzahl: {row_count}")
 
-    # Parquet-Ziel vorbereiten
+    # Zielpfad erzeugen
     os.makedirs(output_dir, exist_ok=True)
     base_name = os.path.basename(file_path).replace(".csv", ".parquet").replace(".json", ".parquet")
     parquet_out = os.path.join(output_dir, base_name)
 
-    # Metadaten schreiben
+    # Metadaten erstellen
     meta = {
         "type": config.get("type", "source"),
         "name": config.get("name", "unknown"),
@@ -69,7 +60,16 @@ def run_loader(yaml_path: str, output_dir: str = "in"):
         "project": config.get("project", "default"),
     }
 
+    # Schreiben
     write_parquet_with_metadata(df, parquet_out, meta)
 
 
+if __name__ == "__main__":
+    import argparse
 
+    parser = argparse.ArgumentParser(description="OneStack YSF Loader")
+    parser.add_argument("--yaml", required=True, help="Pfad zur YAML-Konfiguration")
+    parser.add_argument("--output", default="in", help="Zielordner für Parquet-Dateien")
+    args = parser.parse_args()
+
+    run_loader(args.yaml, output_dir=args.output)
