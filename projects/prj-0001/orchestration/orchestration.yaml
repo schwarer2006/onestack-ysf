@@ -1,0 +1,16 @@
+# ---
+# name: full_pipeline
+# type: orchestration
+# description: Kompletter Tageslauf für prj-0001
+# ---
+
+schedule:
+  cron: "0 4 * * *"  # täglich um 4 Uhr morgens
+
+steps:
+  - run: customer_loader.yaml
+  - run: customer_bronze.yaml
+  - run: customers.yaml
+  - run: dim_customer.yaml
+  - run: revenue_forecast.yaml
+  - run: export_dim_customer.yaml
