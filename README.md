@@ -99,8 +99,8 @@ onestack metabase sync
 
 ## 📄 Lizenz & Kontakt
 
-OneStack YSF ist ein Open DataOps Framework.  
-Entwickelt von Erik, gepflegt im Projekt **onestack-ysf**.  
+OneStack YSF yaml semantic framework  ist ein Open DataOps Framework.  
+Entwickelt von Schwarz Erik (OneStack), gepflegt im Projekt **onestack-ysf**.  
 Fragen? → info@deinprojekt.ch
 
 ---
