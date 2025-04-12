@@ -1,41 +1,34 @@
-#!/usr/bin/env python3
 # ==========================================================
 # 📄 Script: role_checker.py
-# 🛡️ Zweck : Ermittelt Nutzerrolle & prüft CLI-Berechtigungen
-# 🔧 Version: 0.1.0
-# ✏️ Status : draft
+# 🧠 Zweck : Rollenprüfung für OneStack CLI-Kommandos
+# 🔧 Version: 0.2.0
+# ✏️ Status : stable
 # 📅 Erstellt: 2025-04-11
 # ==========================================================
 
 import os
-import pwd
-import grp
 import yaml
+from pathlib import Path
 
-ROLES_FILE = "core/config/roles.yaml"
-DEFAULT_ROLE = "readonly"
-
-def get_user_groups():
-    user = pwd.getpwuid(os.getuid()).pw_name
-    return [grp.getgrgid(gid).gr_name for gid in os.getgroups()]
+ROLES_FILE = Path(__file__).resolve().parent.parent / "config" / "roles.yaml"
 
 def get_role():
-    groups = get_user_groups()
-    if "onestackadmin" in groups:
-        return "admin"
-    elif "onestackdev" in groups:
-        return "dev"
-    elif "onestackro" in groups:
-        return "readonly"
-    return DEFAULT_ROLE
+    """
+    Liest die aktuelle Rolle aus der Umgebungsvariable ONESTACK_ROLE.
+    """
+    return os.environ.get("ONESTACK_ROLE", "readonly")
 
 def is_allowed(command):
+    """
+    Prüft, ob der gegebene Befehl für die aktuelle Rolle erlaubt ist.
+    """
     role = get_role()
     if not os.path.exists(ROLES_FILE):
-        return True  # Wenn Datei fehlt, keine Einschränkung
+        return True  # Keine Einschränkung bei fehlender Datei
     with open(ROLES_FILE, "r") as f:
         data = yaml.safe_load(f)
-    allowed = data.get("roles", {}).get(role, [])
+    role_data = data.get("roles", {}).get(role, {})
+    allowed = role_data.get("allowed_commands", [])
     return command in allowed
 
 if __name__ == "__main__":

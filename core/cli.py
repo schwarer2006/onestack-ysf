@@ -40,9 +40,58 @@ def run(args):
     print(f"🚀 Running node or project: {args.target}")
     # TODO: Node-Runner starten
 
+
+def validate(args):
+     pass  # TODO: cerberus/voluptuous später
+
+#!/usr/bin/env python3
+# ==========================================================
+# 📄 Script: cli.py
+# 🧠 Zweck : OneStack CLI – Startpunkt für Kommandos
+# 🔧 Version: 0.3.0
+# ✏️ Status : stable
+# 📅 Erstellt: 2025-04-11
+# ==========================================================
+
+"""
+CLI-Einstiegspunkt für OneStack YSF
+
+Verfügbare Kommandos:
+  - run           Starte einen Node oder ein Projekt
+  - validate      Validiere YAML-Konfigurationen
+  - status        Zeige Projekt-/Engine-Metainfos
+  - copy-template Kopiere Templates ins Projekt
+  - test          YAML-Test aller Nodes (Basisvalidierung)
+  - view          Zeige Datei-Inhalt im Terminal (yaml/log/py etc.)
+  - push          Git Push mit optionaler Commit-Message
+  - load          YAML Loader ausführen und Parquet erzeugen
+"""
+
+import os
+import sys
+import argparse
+import yaml
+from datetime import datetime
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from core.lib.role_checker import is_allowed, get_role
+from core.lib.test_runner import test_all_yaml
+from core.lib.loader import run_loader
+
+LOG_FILE = "logs/test_results.log"
+
+# ----------------------------------------------------------
+# Hauptfunktionen
+# ----------------------------------------------------------
+
+def run(args):
+    print(f"🚀 Running node or project: {args.target}")
+    # TODO: Node-Runner starten
+
 def validate(args):
     print("🔍 Validating YAML files...")
-    # TODO: Erweiterbar mit cerberus/voluptuous
+    # TODO: cerberus/voluptuous später
 
 def show_status(args):
     print("📊 OneStack YSF Status:")
@@ -50,7 +99,7 @@ def show_status(args):
 
 def copy_template(args):
     print(f"📁 Kopiere Template '{args.template}' nach Projekt '{args.project}'...")
-    # TODO: Template-Datei von core/templates/ in projects/<id>/templates/ kopieren
+    # TODO: Templates aus /core/templates/ kopieren
 
 def validate_yaml_file(filepath):
     required_keys = ["type", "name"]
@@ -119,6 +168,45 @@ def git_push(args):
     except subprocess.CalledProcessError:
         print("❌ Fehler beim Git Push – prüfe deinen Commit oder Netzwerk.")
 
+def load_data(args):
+    print(f"📥 Lade YAML-Quelle: {args.file}")
+    try:
+        run_loader(args.file, output_dir="auto")
+    except Exception as e:
+        print(f"❌ Fehler beim Laden: {e}")
+
+def peek_parquet_file(args):
+    import pyarrow.parquet as pq
+    import pandas as pd
+
+    file = args.file
+    rows = args.rows
+    show_meta = args.meta
+
+    if not os.path.exists(file):
+        print(f"❌ Datei nicht gefunden: {file}")
+        return
+
+    print(f"🔍 Lese Parquet-Datei: {file}\n")
+
+    # Vorschau
+    df = pd.read_parquet(file)
+    preview = df.head(rows)
+    print(f"📊 Vorschau ({rows} Zeilen):\n")
+    print(preview.to_string(index=False))
+
+    # Metadaten
+    if show_meta:
+        print("\n🔖 Metadaten:")
+        table = pq.read_table(file)
+        meta = table.schema.metadata
+        if meta:
+            for k, v in meta.items():
+                print(f"• {k.decode('utf-8')}: {v.decode('utf-8')}")
+        else:
+            print("ℹ️ Keine Metadaten im Parquet-File gefunden.")
+
+
 # ----------------------------------------------------------
 # CLI Setup
 # ----------------------------------------------------------
@@ -149,7 +237,7 @@ def main():
     # test
     test_parser = subparsers.add_parser("test", help="Testet YAMLs aller Projekte (Basis-Checks)")
     test_parser.add_argument("--path", help="Projektpfad, z. B. projects/prj-0001", default="projects")
-    test_parser.add_argument("--logfile", help="Pfad zur Log-Datei", default="logs/test_results.log")
+    test_parser.add_argument("--logfile", help="Pfad zur Log-Datei", default=LOG_FILE)
     test_parser.add_argument("--markdown-report", action="store_true", help="Erzeuge Markdown-Testreport")
     test_parser.add_argument("--summary", action="store_true", help="Zeigt eine kompakte Zusammenfassung am Ende")
     test_parser.set_defaults(func=test_all_yaml)
@@ -167,13 +255,29 @@ def main():
     push_parser.add_argument("--message", help="Commit-Message")
     push_parser.set_defaults(func=git_push)
 
-    # --- Parse + Rollenprüfung ---
+    # 🆕 load
+    load_parser = subparsers.add_parser("load", help="Lädt Daten aus YAML-Konfiguration und erzeugt Parquet")
+    load_parser.add_argument("--file", required=True, help="Pfad zur YAML-Datei (z. B. loader.yaml)")
+    load_parser.set_defaults(func=load_data)
+
+    # peek
+    peek_parser = subparsers.add_parser("peek", help="Zeige Parquet-Inhalt & Metadaten")
+    peek_parser.add_argument("--file", required=True, help="Pfad zur Parquet-Datei")
+    peek_parser.add_argument("--rows", type=int, default=10, help="Anzahl der Zeilen für Vorschau")
+    peek_parser.add_argument("--meta", action="store_true", help="Zeige Parquet-Metadaten")
+    peek_parser.set_defaults(func=peek_parquet_file)
+
+
+
     args = parser.parse_args()
+
     if not is_allowed(args.command):
         print(f"⛔ Zugriff verweigert: Deine Rolle ({get_role()}) darf '{args.command}' nicht ausführen.")
         return
 
     args.func(args)
+
+
 
 if __name__ == "__main__":
     main()

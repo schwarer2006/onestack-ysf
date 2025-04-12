@@ -1,0 +1,30 @@
+type: source
+name: customer_loader
+project: prj-0002
+source:
+  format: csv
+  path: /data/shared/customers.csv
+  delimiter: ','
+  encoding: utf-8
+  header: true
+columns:
+- name: CustomerID
+  type: int
+  nullable: true
+- name: FirstName
+  type: string
+  nullable: true
+- name: MiddleInitial
+  type: string
+  nullable: true
+- name: LastName
+  type: string
+  nullable: true
+- name: CityID
+  type: int
+  nullable: true
+- name: Address
+  type: string
+  nullable: true
+created_by: erik2006
+created_at: '2025-04-11T15:30:05.573937'

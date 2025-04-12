@@ -58,4 +58,9 @@ def export_to_parquet(con, sql, target_file):
         COPY ({sql}) TO '{target_file}' (FORMAT PARQUET, COMPRESSION 'SNAPPY')
     """)
     print("✅ Export abgeschlossen.")
-
+# Alias für Kompatibilität mit bestehendem Code
+def duckdb_connect():
+    return create_connection()
+# Alias für Kompatibilität mit bestehendem Code
+def duckdb_connect():
+    return create_connection()
