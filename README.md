@@ -105,8 +105,3 @@ Fragen? → info@deinprojekt.ch
 
 ---
 
-## 📥 PDF-Version gefällig?
-
-👉 Sag einfach *„Exportiere als PDF“* – ich mache dir sofort eine schön formatierte, druckfähige Version (inkl. Logo, Farben, Fußzeile etc.)
-
-Willst du das jetzt als PDF oder gleich auch ins GitHub-Wiki oder in deine Readme integrieren?
