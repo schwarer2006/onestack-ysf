@@ -1,0 +1,24 @@
+users:
+  admin:
+    password: ubuntu2006
+    role: admin
+
+  dev:
+    password: ubuntu2006
+    role: dev
+
+  readonly:
+    password: ubuntu2006
+    role: readonly
+
+  secure_reader:
+    password: ubuntu2006
+    role: secure_readonly
+
+  jobrunner:
+    password: ubuntu2006
+    role: jobrunner
+
+  orchestrator:
+    password: ubuntu2006
+    role: orchestrator

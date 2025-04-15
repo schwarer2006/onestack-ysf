@@ -1,0 +1,48 @@
+#!/bin/bash
+# ==================================================================
+# 📄 Script      : /usr/local/bin/ossecure
+# 🔐 Zweck       : Sichere OneStack-Shell mit Session-Tracking
+# 👤 Autor       : OneStack System
+# 🔧 Version     : 0.1.0
+# 📅 Erstellt    : 2025-04-13
+# 📁 Voraussetzung: /opt/onestack-ysf, venv, role_checker
+# ==================================================================
+
+SECURE_MENU="/opt/onestack-ysf/scripts/onestack_secure_menu.sh"
+LOGFILE="/opt/onestack-ysf/logs/sessions.log"
+
+read -p "👤 Benutzer: " USERNAME
+read -s -p "🔑 Passwort: " PASSWORD
+echo ""
+
+# 🧠 Rollenname aus Username ableiten (z. B. dev2006 → dev)
+ROLE="${USERNAME//2006/}"
+
+# 🔐 Validierung über Passwort-Datei (vereinfachte Variante)
+if [[ "$PASSWORD" != "ubuntu2006" ]]; then
+  echo "⛔ Falsches Passwort!"
+  exit 1
+fi
+
+# 📦 Python venv aktivieren
+source /home/$USERNAME/venv/onestack/bin/activate
+
+# 🌐 Session-ID generieren & in den RAM schreiben
+SESSION_ID=$(uuidgen)
+echo "$SESSION_ID" > "/dev/shm/onestack_session_${USERNAME}"
+
+# 🔧 Exportieren als Umgebungsvariable
+export ONESTACK_USER="$USERNAME"
+export ONESTACK_ROLE="$ROLE"
+export ONESTACK_SESSION_ID="$SESSION_ID"
+export ONESTACK_SECURE_MODE=1
+
+# 📝 Logeintrag
+echo "$(date +%Y-%m-%dT%H:%M:%S) | SECURE LOGIN | $USERNAME | ROLE=$ROLE | SESSION=$SESSION_ID" >> "$LOGFILE"
+
+# 🎛 Sicheres Menü starten
+if [[ -x "$SECURE_MENU" ]]; then
+  bash "$SECURE_MENU"
+else
+  echo "⚠️ Sicheres Menü nicht gefunden: $SECURE_MENU"
+fi

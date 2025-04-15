@@ -1,0 +1,16 @@
+# ==========================================================
+# 📄 Datei     : core/config/paths.yaml
+# 🧠 Zweck     : Zentrale Pfaddefinitionen für OneStack
+# 🔧 Version   : 0.1.0
+# ✏️ Status    : draft
+# 👤 Autor     : Erik / OneStack Dev
+# 📅 Erstellt  : 2025-04-13
+# 🛠 Zuletzt   : 2025-04-13
+# ==========================================================
+
+paths:
+  workspace_root: /opt/workspace
+  datapool_root: /opt/datapool
+  shared_data: /data/shared
+  templates_root: /opt/onestack-ysf/templates
+  logs_root: /opt/onestack-ysf/logs

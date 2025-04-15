@@ -206,6 +206,27 @@ def peek_parquet_file(args):
         else:
             print("ℹ️ Keine Metadaten im Parquet-File gefunden.")
 
+def login_menu(args):
+    import getpass
+    from core.security.session_guard import login_with_credentials
+
+    username = input("👤 Benutzername: ")
+    password = getpass.getpass("🔑 Passwort: ")
+
+    if not username or not password:
+        print("❌ Ungültige Eingabe.")
+        return
+
+    success = login_with_credentials(username, password)
+
+    if success:
+        print(f"✅ Login erfolgreich – Willkommen {username}")
+    else:
+        print("⛔ Login fehlgeschlagen.")
+
+
+
+
 
 # ----------------------------------------------------------
 # CLI Setup
@@ -266,6 +287,10 @@ def main():
     peek_parser.add_argument("--rows", type=int, default=10, help="Anzahl der Zeilen für Vorschau")
     peek_parser.add_argument("--meta", action="store_true", help="Zeige Parquet-Metadaten")
     peek_parser.set_defaults(func=peek_parquet_file)
+
+    # login
+    login_parser = subparsers.add_parser("login", help="Login mit Benutzername & Passwort (interaktiv)")
+    login_parser.set_defaults(func=login_menu)
 
 
 

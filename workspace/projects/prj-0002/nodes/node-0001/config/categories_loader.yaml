@@ -1,0 +1,12 @@
+# ==========================================================
+# 🧾 Loader YAML: categories_loader.yaml
+# 🌱 Erstellt durch Auto-Loader
+# ==========================================================
+type: source
+name: categories_loader
+source_file: /data/shared/categories.csv
+load_type: csv
+project: prj-0002
+node: node-0001
+created_by: root
+created_at: 2025-04-12T12:15:34+00:00

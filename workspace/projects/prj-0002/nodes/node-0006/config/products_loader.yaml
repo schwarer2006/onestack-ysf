@@ -1,0 +1,12 @@
+# ==========================================================
+# 🧾 Loader YAML: products_loader.yaml
+# 🌱 Erstellt durch Auto-Loader
+# ==========================================================
+type: source
+name: products_loader
+source_file: /data/shared/products.csv
+load_type: csv
+project: prj-0002
+node: node-0006
+created_by: root
+created_at: 2025-04-12T12:15:34+00:00
